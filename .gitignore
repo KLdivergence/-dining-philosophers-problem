@@ -1,8 +1,12 @@
 import threading
 import random
 import time
+
+
+# Python code for Dining philosophers
+# tested under Python 2.6
  
-class Philosopher(threading.Thread):
+class Phi(threading.Thread):
  
     running = True
  
@@ -41,17 +45,16 @@ class Philosopher(threading.Thread):
         print '%s finishes eating and leaves to think.' % self.num
  
 def DiningPhilosophers():
-    forks = [threading.Lock() for n in range(5)]
+    forks = [threading.Lock() for jj in range(5)]
     phi_nums = ('Phi1','Phi2','Phi3','Phi4', 'Phi5')
  
-    philosophers= [Philosopher(phi_nums[i], forks[i%5], forks[(i+1)%5]) \
-            for i in range(5)]
+    phis= [Phi(phi_nums[ii], forks[ii%5], forks[(ii+1)%5]) \
+            for ii in range(5)]
  
 
-    Philosopher.running = True
-    for p in philosophers: p.start()
+    Phi.running = True
+    for p in phis: p.start()
     time.sleep(200)
-    Philosopher.running = False
-    print ("Now we're finishing.")
+    Phi.running = False
  
 DiningPhilosophers()
