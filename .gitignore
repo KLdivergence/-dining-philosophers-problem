@@ -1,6 +1,6 @@
-import threading
 import random
 import time
+import threading
 
 
 # Python code for Dining philosophers
@@ -9,7 +9,6 @@ import time
 class Phi(threading.Thread):
  
     running = True
- 
     def __init__(self, num, leftfork, rightfork):               #initiate threads
         threading.Thread.__init__(self)
         self.num = num
@@ -30,7 +29,7 @@ class Phi(threading.Thread):
             occupy = fork2.acquire(False)
             if occupy: break
             fork1.release()
-            print '%s swaps fork order' % self.num  
+            print '%s swaps fork order, keep on waiting' % self.num  
             fork1, fork2 = fork2, fork1                         #pick up the other fork first next time
         else:
             return
@@ -42,7 +41,7 @@ class Phi(threading.Thread):
     def dining(self):            
         print '%s starts eating '% self.num
         time.sleep(random.uniform(10,20))                       #time before finish eating, should less than time of thinking
-        print '%s finishes eating and leaves to think.' % self.num
+        print '%s finishes eating and take a nap.' % self.num
  
 def DiningPhilosophers():
     forks = [threading.Lock() for jj in range(5)]
@@ -52,7 +51,7 @@ def DiningPhilosophers():
                                                                 #choose fork next to them 
             
     Phi.running = True
-    for p in phis: p.start()
+    for num in phis: num.start()
     time.sleep(200)
     Phi.running = False
  
